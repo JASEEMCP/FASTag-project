@@ -25,7 +25,7 @@ class RowDataWidget extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .headlineSmall!
-                .copyWith(color: Colors.grey[500], fontWeight: FontWeight.w100),
+                .copyWith(color: Colors.grey[500], fontWeight: FontWeight.w500),
           ),
         ],
       ),

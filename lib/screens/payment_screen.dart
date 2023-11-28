@@ -36,7 +36,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             hintText: "Vehical number",
           ),
           const CustomTextField(
-            hintText: "FASTag Id",
+            hintText: "Toolbooth Id",
           ),
           ElevatedButton(
             onPressed: () {

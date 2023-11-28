@@ -1,3 +1,5 @@
+import 'package:fastag/screens/login_screen.dart';
+import 'package:fastag/screens/vehical_info_screen.dart';
 import 'package:flutter/material.dart';
 
 class PaymentHistoryScreen extends StatefulWidget {
@@ -15,17 +17,39 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
       appBar: AppBar(
         title: const Text("History"),
       ),
-      body: ListView.builder(
-        itemCount: 6,
-        itemBuilder: (ctx, index) {
-          return ListTile(
-            leading: Text(
-              "+ \$${amount[index]}",
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            title: const Text("Place : Kozikode"),
-            subtitle: const Text("Time : 20:00 IST"),
-            trailing: const Text("Date: 05/11/2023"),
+      body: FutureBuilder(
+        future: api.getPaymentHistory($username),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              return const Center(
+                child: Text(
+                  'Error occurred',
+                  style: TextStyle(fontSize: 18),
+                ),
+              );
+
+              // if we got our data
+            } else if (snapshot.hasData) {
+              print(snapshot.data);
+              final data = snapshot.data;
+              return ListView.builder(
+                itemCount: data?.length,
+                itemBuilder: (ctx, index) {
+                  return ListTile(
+                    leading: Text(
+                      "+ \$${data?[index]['t_cost']}",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    title: Text("Toolbooth ID : ${data?[index]['t_id']}"),
+                    subtitle: Text("Fstag ID : ${data?[index]['t_fastag']}"),
+                  );
+                },
+              );
+            }
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
           );
         },
       ),
