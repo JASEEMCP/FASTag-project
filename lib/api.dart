@@ -123,7 +123,7 @@ class ApiService {
     }
   }
 
-  Future<String> getAmoutToPay(String vehicalNo, String toolBoothId) async {
+  Future<Map<String,dynamic>> getAmoutToPay(String vehicalNo, String toolBoothId) async {
     try {
       Dio dio = Dio();
       final response = await dio.post("$baseUrl/toll-details/", data: {
@@ -131,14 +131,13 @@ class ApiService {
         "t_id": toolBoothId,
       });
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
+      
         print(response.data);
         return response.data;
-      } else {
-        return "Not created";
-      }
+      
+      
     } catch (e) {
-      return "Error found";
+      throw Exception("Couldnt get data");
     }
   }
 }

@@ -1,3 +1,5 @@
+import 'package:fastag/screens/login_screen.dart';
+import 'package:fastag/screens/vehical_info_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'widget/text_field_widget.dart';
@@ -11,6 +13,8 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   bool isVisible = false;
+  TextEditingController vNo = TextEditingController();
+  TextEditingController tId = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,11 +36,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
             "Pay now :",
             style: Theme.of(context).textTheme.bodyLarge,
           ),
-          const CustomTextField(
+          CustomTextField(
             hintText: "Vehical number",
+            controller: vNo,
           ),
-          const CustomTextField(
+          CustomTextField(
             hintText: "Toolbooth Id",
+            controller: tId,
           ),
           ElevatedButton(
             onPressed: () {
@@ -51,13 +57,20 @@ class _PaymentScreenState extends State<PaymentScreen> {
           const SizedBox(
             height: 50,
           ),
-          Visibility.maintain(
-            visible: isVisible,
-            child: Text(
-              "\$ 50",
-              style: Theme.of(context).textTheme.displaySmall,
-            ),
-          ),
+          FutureBuilder(
+              future: api.getAmoutToPay(vNo.text, tId.text),
+              builder: (context, snapshot) {
+                final data = snapshot.data ;
+                $username = data?['username'];
+                print(snapshot.data);
+                return Visibility.maintain(
+                  visible: isVisible,
+                  child: Text(
+                    "\$ ${data?['price']}",
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                );
+              }),
           const SizedBox(
             height: 10,
           ),
