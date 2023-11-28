@@ -13,6 +13,7 @@ class PaymentScreen extends StatefulWidget {
 
 class _PaymentScreenState extends State<PaymentScreen> {
   bool isVisible = false;
+  Map<String, dynamic> result = {};
   TextEditingController vNo = TextEditingController();
   TextEditingController tId = TextEditingController();
   @override
@@ -45,8 +46,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
             controller: tId,
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               isVisible = true;
+              result = await api.getAmoutToPay(vNo.text, tId.text);
+              $username = result['username'];
               setState(() {});
             },
             child: Text(
@@ -57,26 +60,21 @@ class _PaymentScreenState extends State<PaymentScreen> {
           const SizedBox(
             height: 50,
           ),
-          FutureBuilder(
-              future: api.getAmoutToPay(vNo.text, tId.text),
-              builder: (context, snapshot) {
-                final data = snapshot.data ;
-                $username = data?['username'];
-                print(snapshot.data);
-                return Visibility.maintain(
-                  visible: isVisible,
-                  child: Text(
-                    "\$ ${data?['price']}",
-                    style: Theme.of(context).textTheme.displaySmall,
-                  ),
-                );
-              }),
+          Visibility.maintain(
+            visible: isVisible,
+            child: Text(
+              "\$ ${result['price']} ",
+              style: Theme.of(context).textTheme.displaySmall,
+            ),
+          ),
           const SizedBox(
             height: 10,
           ),
           isVisible
               ? ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await api.payAmout($username, tId.text);
+                  },
                   child: Text(
                     "Pay Now",
                     style: Theme.of(context).textTheme.bodyLarge,

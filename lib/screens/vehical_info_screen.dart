@@ -118,12 +118,13 @@ class _VehicalInfoScreenState extends State<VehicalInfoScreen> {
   }
 
   Future<dynamic> showDialogBox(BuildContext context) {
+    var data = 0;
     return showDialog(
       context: context,
       builder: (context) {
         final TextEditingController cont = TextEditingController();
         return AlertDialog(
-          title: const CustomTextField(hintText: "Enter money"),
+          title:  CustomTextField(hintText: "Enter money",controller: cont,),
           content: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -135,7 +136,11 @@ class _VehicalInfoScreenState extends State<VehicalInfoScreen> {
               ),
               CustomTextButton(
                 onPressed: () async {
-                  int data = int.parse(cont.text);
+                  
+                    data = int.parse(cont.text.trim());
+           
+                  
+
                   await api.updateCreditBalance($username, data);
                 },
                 buttonName: "Add money",

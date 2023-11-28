@@ -62,6 +62,7 @@ class VehicalRegistarion extends StatelessWidget {
               ),
               CustomTextButton(
                   onPressed: () {
+                    if (!host.text.contains('http')) return;
                     baseUrl = host.text;
                   },
                   buttonName: "Host"),
@@ -88,7 +89,7 @@ class VehicalRegistarion extends StatelessWidget {
               CustomTextButton(
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (ctx) => LoginScreen()));
+                      MaterialPageRoute(builder: (ctx) => const LoginScreen()));
                 },
                 buttonName: "Check Vehical Info,Click Here",
               ),

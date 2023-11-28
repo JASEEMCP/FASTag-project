@@ -10,7 +10,7 @@ class PaymentHistoryScreen extends StatefulWidget {
 }
 
 class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
-  List amount = [45, 23, 53, 64, 34, 34];
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,8 +38,11 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                 itemBuilder: (ctx, index) {
                   return ListTile(
                     leading: Text(
-                      "+ \$${data?[index]['t_cost']}",
-                      style: Theme.of(context).textTheme.titleLarge,
+                      "- \$${data?[index]['t_cost']}",
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge!
+                          .copyWith(color: Colors.red),
                     ),
                     title: Text("Toolbooth ID : ${data?[index]['t_id']}"),
                     subtitle: Text("Fstag ID : ${data?[index]['t_fastag']}"),

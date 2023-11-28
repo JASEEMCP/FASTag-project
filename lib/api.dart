@@ -69,24 +69,21 @@ class ApiService {
     }
   }
 
-  Future<String> updateCreditBalance(
-      String username, int amountToAdd) async {
+  Future<Map<String,dynamic>> updateCreditBalance(String username, int amountToAdd) async {
     try {
       Dio dio = Dio();
       final response = await dio.put("$baseUrl/details/", data: {
         "username": username,
-        "credit": 50,
+        "credit": amountToAdd,
       });
       print(response.data);
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        print(response.data);
+      
+        
         return response.data;
-      } else {
-        return "Not created";
-      }
+      
     } catch (e) {
       print(e);
-      return "Error found";
+      throw "Error found";
     }
   }
 
@@ -123,7 +120,8 @@ class ApiService {
     }
   }
 
-  Future<Map<String,dynamic>> getAmoutToPay(String vehicalNo, String toolBoothId) async {
+  Future<Map<String, dynamic>> getAmoutToPay(
+      String vehicalNo, String toolBoothId) async {
     try {
       Dio dio = Dio();
       final response = await dio.post("$baseUrl/toll-details/", data: {
@@ -131,11 +129,9 @@ class ApiService {
         "t_id": toolBoothId,
       });
 
-      
-        print(response.data);
-        return response.data;
-      
-      
+      final Map<String, dynamic> data = response.data;
+
+      return data;
     } catch (e) {
       throw Exception("Couldnt get data");
     }
