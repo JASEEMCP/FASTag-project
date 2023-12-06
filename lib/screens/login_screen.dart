@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
             height: 50,
           ),
           Text(
-            "Pay now :",
+            "Login user",
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           CustomTextField(

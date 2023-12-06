@@ -34,7 +34,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             height: 50,
           ),
           Text(
-            "Pay now :",
+            "Pay amount :",
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           CustomTextField(
@@ -42,7 +42,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             controller: vNo,
           ),
           CustomTextField(
-            hintText: "Toolbooth Id",
+            hintText: "Tollbooth Id",
             controller: tId,
           ),
           ElevatedButton(
@@ -76,7 +76,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     await api.payAmout($username, tId.text);
                   },
                   child: Text(
-                    "Pay Now",
+                    "Fill the field",
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 )
